@@ -39,13 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
 
 					<div class="form-group">
 						<label>Tgl Lahir</label>
-						<div class='input-group date' id='datetimepicker5'>
-		                    <input type='text' name="tanggalLahir" class="form-control" />
-		                    <span class="input-group-addon">
-		                        <span class="glyphicon glyphicon-calendar"></span>
-		                    </span>
-		                </div>
-					</div>
+						<input type="text" class="form-control" name="tanggalLahir">
 
 					<div class="form-group">
 						<label>No HP</label>
@@ -56,11 +50,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
 					<div class="form-group">
 						<label>Email</label>
 						<input type="text" class="form-control" name="email">
-					</div>
-
-					<div class="form-group">
-						<label>Password</label>
-						<input type="text" class="form-control" name="password">
 					</div>
 
 					<div class="form-group">

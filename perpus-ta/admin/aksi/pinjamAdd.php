@@ -2,17 +2,25 @@
 <?php include '../inc/sidebar.php'; ?>
 <?php 
 
-	if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-		$kodeBuku = $_POST['buku'];
-		$add_cart = $t->addToTemp($kodeBuku);
-	}
-
+	// if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+	// 	$kodeBuku = $_POST['buku'];
+	// 	$add_cart = $t->addToTemp($kodeBuku);
+	// }
+?>
+<?php 
+	
 	$staf = Session::get('id');
-	if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-		$member = $_POST['member'];
-		$add_pinjam = $t->addToPinjam($nim, $staf);
+	if (isset($_POST['send'])) {
+		$id = $_POST['member'];
+		$add_pinjam = $t->addToPinjam($id, $staf);
 	}
 	
+?>
+<?php 
+  if (isset($_GET['delBkb'])) {
+    $kb = $_GET['delBkb'];
+    $del = $t->delPfBykb($kb);
+  }
 ?>
 
 
@@ -38,7 +46,7 @@
 					    </select>
 					</div>
 						<div class="form-group"><br>
-						<input type="submit" id='insert' class="btn btn-primary simpan" name="submit" value="Add" style="margin-top: 5px;">
+						<input type="submit" id='insert' class="btn btn-primary simpan" name="add" value="Add" style="margin-top: 5px;">
 						</div>
 					</div>
 				</div>
@@ -53,8 +61,9 @@
 				<div class="col col-md-6">
 					<table class="table table-default">
 						<tr>
-							<td>No.</td>
-							<td>Nama</td>
+							<th>No.</th>
+							<th>Nama</th>
+							<th>Action</th>
 						</tr>
 						<?php 
 							$no=0;
@@ -66,15 +75,20 @@
 						<tr>
 						<td><?php echo $no; ?></td>
 						<td><?php
-							$value = $b->getBukuBykodeBuku($result['kodeBuku'])->fetch_assoc();
-							echo $value['judul'];
-						?></td>		
+							// $kodeBuku = $result['kodeBuku'];	
+							// $value = $b->getBukuBykodeBuku($kodeBuku)->fetch_assoc();
+							// echo $value['judul'];
+						echo $result['kodeBuku'];
+						?></td>
+						<td width="16%">
+				            <a onclick="return confirm('Yakin untuk Hapus Data ?')" href="pinjamAdd.php?delBkb=<?php echo $result['kodeBuku']; ?>"><button class="btn-danger btn-sm">Hapus</button></a>
+				    	</td>
 						</tr>
 						<?php } } ?>
 					</table>
 				</div>
 				<div class="col col-md-6">
-					<form action="" method='post'>
+					<form action="" method='POST'>
 						<div class="row">
 							<div class="col-md-4">
 							<div class="form-group">
@@ -85,7 +99,7 @@
 								        $m = $m->getAllMember();
 								        if ($m) {
 								          while ($result = $m->fetch_assoc()) {?>
-							        <option value="<?php echo $result['nim'] ?>"><?php echo $result['nama'] ?></option>
+							        <option value="<?php echo $result['id'] ?>"><?php echo $result['nama'] ?></option>
 							        <?php } } ?>
 							    </select>
 							</div>

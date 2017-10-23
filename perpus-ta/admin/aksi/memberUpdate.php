@@ -63,11 +63,6 @@
 					</div>
 
 					<div class="form-group">
-						<label>Password</label>
-						<input type="text" value="<?php echo $result['pass'] ?>" class="form-control" name="password">
-					</div>
-
-					<div class="form-group">
 						<br>
 						<label>Foto</label>
 						<img src="../<?php echo $result['foto'] ?>" height="45px" width="60px"><br><br>

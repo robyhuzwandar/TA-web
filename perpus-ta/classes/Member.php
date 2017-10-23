@@ -17,20 +17,19 @@ include_once ($filepath.'/../lib/Format.php');
 
   		public function getAllMember()
 	  	{
-		  	$query = "SELECT * FROM member ORDER BY id DESC";
+		  	$query = "SELECT * FROM member";
 		    $result = $this->db->select($query);
 		    return $result;
 	  	}
 
 	  	public function insertMember($data, $file)
 	  	{
-	  		$nim = mysqli_real_escape_string($this->db->link, $data['nim']);
 	  		$nama = mysqli_real_escape_string($this->db->link, $data['nama']);
-	  		$alamat = mysqli_real_escape_string($this->db->link, $data['alamat']);
-	  		$tglLahir = mysqli_real_escape_string($this->db->link, $data['tglLahir']);
-	  		$nohp = mysqli_real_escape_string($this->db->link, $data['nohp']);
+	  		$nim = mysqli_real_escape_string($this->db->link, $data['nim']);
 	  		$email = mysqli_real_escape_string($this->db->link, $data['email']);
-	  		$password = mysqli_real_escape_string($this->db->link, $data['password']);
+	  		$nohp = mysqli_real_escape_string($this->db->link, $data['nohp']);
+	  		$alamat = mysqli_real_escape_string($this->db->link, $data['alamat']);
+	  		$tglLahir = mysqli_real_escape_string($this->db->link, $data['tanggalLahir']);
 
 	  		$permited = array('jpg', 'jpeg', 'png', 'gif');
 		    $file_name = $_FILES['foto']['name'];
@@ -50,11 +49,11 @@ include_once ($filepath.'/../lib/Format.php');
 		    	$query = "SELECT * FROM member WHERE nim='$nim'";
 		    	$cekNama = $this->db->select($query);
 		    	if ($cekNama) {
-		    		$msg = "<span style='color:red;'>Gagal Mendaftar.! nim Sudah Di Gunakan</span>";
+		    		$msg = "<span style='color:red;'>Gagal Mendaftar.! nim Sudah Terdaftar</span>";
 					return $msg;
 		    	}else{
 		    		move_uploaded_file($file_temp, "../".$upload_image);
-			    	$query = "INSERT INTO member(nama, alamat, tglLahir, nohp, email, nim, pass, foto) VALUES('$nama', '$alamat', '$tglLahir', '$nohp', '$email', '$nim', '$password', '$upload_image')";
+			    	$query = "INSERT INTO member(nama, nim, email, nohp,  alamat, tglLahir, foto) VALUES('$nama', '$nim', '$email', '$nohp', '$alamat', '$tglLahir', '$upload_image')";
 					$insert_row = $this->db->insert($query);
 					if ($insert_row) {
 						$msg = "<span style='color:green;'> Pendaftaran Berhasil </span>";
@@ -75,7 +74,6 @@ include_once ($filepath.'/../lib/Format.php');
 	  		$nohp = mysqli_real_escape_string($this->db->link, $data['nohp']);
 	  		$email = mysqli_real_escape_string($this->db->link, $data['email']);
 	  		$nim = mysqli_real_escape_string($this->db->link, $data['nim']);
-	  		$password = mysqli_real_escape_string($this->db->link, $data['password']);
 
 	  		$permited = array('jpg', 'jpeg', 'png', 'gif');
 		    $file_name = $_FILES['foto']['name'];
@@ -107,15 +105,14 @@ include_once ($filepath.'/../lib/Format.php');
 				    	nohp = '$nohp', 
 				    	email = '$email', 
 				    	nim = '$nim',
-				    	pass = '$password',
 				    	foto = '$upload_image'
 				    	WHERE id = '$id'";
 						$insert_row = $this->db->update($query);
 						if ($insert_row) {
-							$msg = "<span style='color:green;'> Pendaftaran Berhasil </span>";
+							$msg = "<span style='color:green;'> Perubahan Berhasil </span>";
 							return $msg;
 						}else{
-							$msg = "<span style='color:red;'> Pendaftaran Gagal </span>";
+							$msg = "<span style='color:red;'> Perubahan Gagal </span>";
 							return $msg;
 						}
 				    }
@@ -127,7 +124,6 @@ include_once ($filepath.'/../lib/Format.php');
 			    	nohp = '$nohp', 
 			    	email = '$email', 
 			    	nim = '$nim',
-			    	pass = '$password'
 			    	WHERE id = '$id'";
 					$insert_row = $this->db->update($query);
 					if ($insert_row) {
